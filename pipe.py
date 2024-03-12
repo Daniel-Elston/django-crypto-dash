@@ -18,6 +18,10 @@ async def save_to_json(data, filename):
     async with aiofiles.open(filename, 'w') as file:
         await file.write(json.dumps(data))
 
+async def load_from_json(filename):
+    async with aiofiles.open(filename, 'r') as file:
+        return json.loads(await file.read())
+
 
 async def ticker(symbol, exchange_name='binance', batch_size=30):
     exchange = getattr(ccxtpro, exchange_name)()
