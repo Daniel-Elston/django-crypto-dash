@@ -1,11 +1,10 @@
 from __future__ import annotations
 
+import logging
 import logging.config
 from pathlib import Path
 
-
 def setup_logging(name, project_dir, log_file_name, config):
-    # file_level='DEBUG', console_level='DEBUG'):
     """Setup logging configuration with dynamic log file naming and levels."""
 
     log_file_path = Path(project_dir, 'log', log_file_name)
@@ -23,11 +22,11 @@ def setup_logging(name, project_dir, log_file_name, config):
         'formatters': {
             'detailed': {
                 'format': '%(levelname)s - %(pathname)s - %(asctime)s - %(filename)s'
-                ' - %(lineno)d - %(module)s - %(name)s - %(funcName)s - %(message)s',
+                ' - %(lineno)d - %(module)s - %(name)s - %(funcName)s - \n%(message)s',
                 'datefmt': '%Y-%m-%d %H:%M:%S',
             },
             'simple': {
-                'format': '%(levelname)s - %(module)s - %(name)s - %(funcName)s - %(lineno)d - %(message)s',
+                'format': '%(levelname)s - %(module)s - %(name)s - %(funcName)s - %(lineno)d: \n%(message)s',
             },
         },
         'handlers': {
@@ -67,11 +66,16 @@ def setup_logging(name, project_dir, log_file_name, config):
                 'handlers': ['console', 'file'],
                 'propagate': False
             },
+            'asyncio': {
+                'level': 'WARNING',
+                'handlers': ['console', 'file'],
+                'propagate': False
         },
         'root': {
             'level': 'DEBUG',
             'handlers': ['console', 'file'],
         },
     }
-
+    }
+    
     logging.config.dictConfig(LOGGING_CONFIG)

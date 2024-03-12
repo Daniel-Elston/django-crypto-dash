@@ -4,7 +4,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 setup(
-    name='crypto-live-analysis',
+    name='myapp',
     packages=find_packages(),
     version='0.1.0',
     description='Enter desc.',
