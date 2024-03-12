@@ -9,10 +9,11 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+from __future__ import annotations
 
-from pathlib import Path
 import os
-import psycopg2
+from pathlib import Path
+
 from utils.setup_env import setup_project_env
 project_dir, config, setup_logs = setup_project_env()
 
