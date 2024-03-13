@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
+import pprint
 
 import ccxt.pro as ccxtpro
 from django.core.management.base import BaseCommand
@@ -9,10 +10,10 @@ from django.core.management.base import BaseCommand
 from utils.file_handler import load_json
 from utils.file_handler import save_json
 from utils.setup_env import setup_project_env
-project_dir, config, setup_logs = setup_project_env()
+_, _, logger = setup_project_env()
 
 
-async def ticker(symbol='BTC/USDT', exchange_name='binance', batch_size=5):
+async def ticker(symbol='BTC/USDT', exchange_name='binance', batch_size=60):
     """Watch the ticker for a specific symbol."""
     exchange = getattr(ccxtpro, exchange_name)()
     counter = 0
@@ -22,19 +23,19 @@ async def ticker(symbol='BTC/USDT', exchange_name='binance', batch_size=5):
         while True:
             ticker = await exchange.fetch_ticker(symbol)
             # ticker = await get_fetch_ticker()
-            print(ticker)
+            logger.debug(pprint(ticker))
             batch.append(ticker)
             counter += 1
 
             if counter % batch_size == 0:
                 batch_n = counter // batch_size
-                print(f'Saving batch: {batch_n}')
+                logger.info(f'Saving batch: {batch_n}')
                 await save_json(batch, f'data/tests/fetch_ticker_{batch_n}.json')
                 batch = []
 
             await asyncio.sleep(1)
 
-            if counter >= 5:
+            if counter >= 180:
                 break
 
     except Exception as e:
