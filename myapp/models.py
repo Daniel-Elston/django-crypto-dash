@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 from django.db import models
 
-class CryptoTicker(models.Model):
+
+class CryptoFetchTicker(models.Model):
     symbol = models.CharField(max_length=100)
     timestamp = models.DateTimeField()
     datetime = models.DateTimeField()
@@ -32,5 +35,3 @@ class CryptoOrder(models.Model):
 
 class CryptoTrades(models.Model):
     pass
-
-

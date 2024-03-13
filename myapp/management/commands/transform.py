@@ -7,7 +7,7 @@ from pprint import pprint
 from django.core.management.base import BaseCommand
 
 from conversion_maps import get_conversion_maps
-from myapp.management.commands.load import load_from_json
+from utils.file_handler import load_json
 from utils.setup_env import setup_project_env
 
 project_dir, config, setup_logs = setup_project_env()
@@ -30,27 +30,31 @@ def recursive_convert(data, conversion_map):
     if isinstance(data, dict):
         return {k: recursive_convert(v, conversion_map.get(k, {})) for k, v in data.items()}
     elif isinstance(data, list):
-        return [recursive_convert(item, conversion_map) for item in data]
+        return [recursive_convert(i, conversion_map) for i in data]
     else:
         return convert_value(data, conversion_map)
 
 
-class Command(BaseCommand):
+class TransformCommand(BaseCommand):
+    help = 'Transforms raw data into a format suitable for storage in the database.'
+
     def __init__(self):
         super().__init__()
         self.logger = logging.getLogger(self.__class__.__name__)
 
-    help = 'Transforms raw data into a format suitable for storage in the database.'
-
-    def handle(self, *args, **kwargs):
-        run(self.async_handle())
-
-    async def async_handle(self):
-        data = await load_from_json('data/tests/fetch_ticker_1.json')
-        self.logger.debug(pprint(data[0]))
+    async def async_transform(self):
+        data = await load_json('data/tests/fetch_ticker_1.json')
 
         converted_data = recursive_convert(data, conversion_map)
-        self.logger.debug(pprint(converted_data[0]))
+        return converted_data
+
+    def handle(self):
+        prepared_data = run(self.async_transform())
+        self.logger.debug(pprint(prepared_data))
 
         self.stdout.write(self.style.SUCCESS(
-            'Successfully ran data processing pipeline'))
+            'Successfully ran Transform pipeline'))
+        return prepared_data
+
+
+Command = TransformCommand

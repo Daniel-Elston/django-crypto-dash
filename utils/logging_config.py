@@ -1,8 +1,8 @@
 from __future__ import annotations
 
-import logging
 import logging.config
 from pathlib import Path
+
 
 def setup_logging(name, project_dir, log_file_name, config):
     """Setup logging configuration with dynamic log file naming and levels."""
@@ -12,9 +12,6 @@ def setup_logging(name, project_dir, log_file_name, config):
 
     file_level = config['logging']['file_level']
     console_level = config['logging']['console_level']
-
-    # logger = logging.getLogger(name)
-    # if not logger.handlers:
 
     LOGGING_CONFIG = {
         'version': 1,
@@ -66,16 +63,21 @@ def setup_logging(name, project_dir, log_file_name, config):
                 'handlers': ['console', 'file'],
                 'propagate': False
             },
+            'aiohttp': {
+                'level': 'WARNING',
+                'handlers': ['console', 'file'],
+                'propagate': False
+            },
             'asyncio': {
                 'level': 'WARNING',
                 'handlers': ['console', 'file'],
                 'propagate': False
-        },
-        'root': {
-            'level': 'DEBUG',
-            'handlers': ['console', 'file'],
-        },
+            },
+            'root': {
+                'level': 'DEBUG',
+                'handlers': ['console', 'file'],
+            },
+        }
     }
-    }
-    
+
     logging.config.dictConfig(LOGGING_CONFIG)
