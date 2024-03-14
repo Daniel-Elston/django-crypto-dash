@@ -36,7 +36,7 @@ class TransformCommand(BaseCommand):
     help = 'Transforms raw data into a format suitable for storage in the database.'
 
     async def async_transform(self):
-        extracted_data = await load_json('data/temp/fetch_ticker_1.json')
+        extracted_data = await load_json('data/temp/fetch_ticker.json')
         transformed_data = recursive_convert(extracted_data, conversion_map)
         table = pa.Table.from_pylist(transformed_data)
         pq.write_table(table, 'data/temp/prepared_fetch_ticker.parq')
