@@ -6,7 +6,7 @@ import pyarrow.parquet as pq
 from asgiref.sync import sync_to_async
 from django.core.management.base import BaseCommand
 
-from myapp.models import CryptoFetchTicker
+from data_management.models import CryptoFetchTicker
 
 
 class LoadCommand(BaseCommand):
