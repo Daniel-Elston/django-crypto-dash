@@ -1,23 +1,20 @@
 from __future__ import annotations
 
-import logging
-from asyncio import run
-from pprint import pprint
+import asyncio
 
+import pyarrow as pa
+import pyarrow.parquet as pq
 from django.core.management.base import BaseCommand
 
 from conversion_maps import get_conversion_maps
 from utils.file_handler import load_json
-from utils.setup_env import setup_project_env
 
-project_dir, config, setup_logs = setup_project_env()
-mapping_store = get_conversion_maps()
-conversion_map = mapping_store['fetch_ticker']
+conversion_map = get_conversion_maps()['fetch_ticker']
 
 
 def convert_value(value, conversions):
     """Converts a value to a specific type using conversion functions."""
-    for target_type, func in conversions.items():
+    for _, func in conversions.items():
         try:
             return func(value)
         except (ValueError, TypeError):
@@ -38,23 +35,17 @@ def recursive_convert(data, conversion_map):
 class TransformCommand(BaseCommand):
     help = 'Transforms raw data into a format suitable for storage in the database.'
 
-    def __init__(self):
-        super().__init__()
-        self.logger = logging.getLogger(self.__class__.__name__)
-
     async def async_transform(self):
-        data = await load_json('data/tests/fetch_ticker_1.json')
-
-        converted_data = recursive_convert(data, conversion_map)
-        return converted_data
-
-    def handle(self):
-        prepared_data = run(self.async_transform())
-        self.logger.debug(pprint(prepared_data))
+        extracted_data = await load_json('data/temp/fetch_ticker_1.json')
+        transformed_data = recursive_convert(extracted_data, conversion_map)
+        table = pa.Table.from_pylist(transformed_data)
+        pq.write_table(table, 'data/temp/prepared_fetch_ticker.parq')
 
         self.stdout.write(self.style.SUCCESS(
             'Successfully ran Transform pipeline'))
-        return prepared_data
+
+    def handle(self, *args, **kwargs):
+        asyncio.run(self.async_transform())
 
 
 Command = TransformCommand

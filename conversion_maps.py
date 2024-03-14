@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from datetime import datetime
 from datetime import timezone
 
@@ -8,11 +10,12 @@ def get_conversion_maps():
         "watch_ticker": watch_ticker_conversion_map(),
         "watch_trades": watch_trades_conversion_map()
     }
-    
+
 
 def timestamp_to_datetime(value):
     """Converts a Unix timestamp (in milliseconds) to a datetime object."""
     return datetime.fromtimestamp(value / 1000.0, tz=timezone.utc)
+
 
 def iso_to_datetime(value):
     """Converts an ISO 8601 datetime string to a datetime object."""
@@ -57,8 +60,8 @@ def fetch_ticker_conversion_map():
             "lowPrice": {"str": float},
             "volume": {"str": float},
             "quoteVolume": {"str": float},
-            "openTime": {"int": int},
-            "closeTime": {"int": int},
+            "openTime": {"int": int},  # dt
+            "closeTime": {"int": int},  # dt
             "firstId": {"str": int},
             "lastId": {"str": int},
             "count": {"str": int},
