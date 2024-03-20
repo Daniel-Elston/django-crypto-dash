@@ -13,7 +13,7 @@ from utils.file_handler import temp_file_reset
 class ExtractCommand(BaseCommand):
     help = 'Transforms raw data into a format suitable for storage in the database.'
 
-    async def ticker(self, symbol='BTC/USDT', exchange_name='binance', batch_size=2, max_items=10):
+    async def ticker(self, symbol='BTC/USDT', exchange_name='binance', batch_size=1, max_items=2):
         """Watch the ticker for a specific symbol."""
         exchange = getattr(ccxtpro, exchange_name)()
         filepath = 'data/temp/fetch_ticker.json'

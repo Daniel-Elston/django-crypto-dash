@@ -60,8 +60,8 @@ def fetch_ticker_conversion_map():
             "lowPrice": {"str": float},
             "volume": {"str": float},
             "quoteVolume": {"str": float},
-            "openTime": {"int": int},  # dt
-            "closeTime": {"int": int},  # dt
+            "openTime": {"int": timestamp_to_datetime},  # dt
+            "closeTime": {"int": timestamp_to_datetime},  # dt
             "firstId": {"str": int},
             "lastId": {"str": int},
             "count": {"str": int},

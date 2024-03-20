@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="m-3">
+    <h1 class="ml-3">Reports Title</h1>
+    <table id="datatable1"></table>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/reports.js' %}"></script>
+{% endblock scripts %}

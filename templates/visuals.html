@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="mx-3 my-5">
+    <h3 class="text-centre">Total Views</h3>
+    <div class="bg-secondary bg-opacity-25 px-5 py-3 rounded">
+        <canvas id="card-long"></canvas>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/visuals.js' %}"></script>
+{% endblock scripts %}
