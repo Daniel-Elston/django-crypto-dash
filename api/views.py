@@ -4,9 +4,10 @@ import json
 import os
 
 from django.http import JsonResponse
+from django.shortcuts import render
+from django_pandas.io import read_frame
 
 from data_management.models import CryptoFetchTicker
-# from django.shortcuts import render
 
 
 def load_json(filepath):
@@ -21,7 +22,7 @@ def load_json(filepath):
 data = load_json('data/temp/fetch_ticker.json')
 
 
-def total_views(request):
+def visuals_api(request):
     queryset = CryptoFetchTicker.objects.all()
     dct = {
         "labels": [],
@@ -30,18 +31,30 @@ def total_views(request):
     for item in queryset:
         dct['labels'].append(item.timestamp)
         dct['data'].append(item.close)
-
     return JsonResponse(dct)
 
 
-def visuals(request):
+def reports_api(request):
     queryset = CryptoFetchTicker.objects.all()
     dct = {
-        "labels": [],
+        "labels": ['timestamp', 'close'],
         "data": [],
     }
     for item in queryset:
-        dct['labels'].append(item.timestamp)
-        dct['data'].append(item.close)
-
+        dct['data'].append([item.timestamp, item.close])
     return JsonResponse(dct)
+
+
+def CryptoReportView(request):
+    qs = CryptoFetchTicker.objects.all()
+    df = read_frame(qs)
+
+    columns = [{'field': f.name, 'title': f.verbose_name.title()}
+               for f in CryptoFetchTicker._meta.fields]
+    json_data = df.to_json(orient='records')
+
+    context = {
+        'data': json_data,
+        'columns': columns
+    }
+    return render(request, 'reports.html', context)

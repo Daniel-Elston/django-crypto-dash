@@ -1,7 +1,7 @@
 
 const cardLongviewChart = document.getElementById('card-long');
 
-fetch('/total_views')
+fetch('/visuals_api')
 .then(res => res.json())
 .then (data => {
     new Chart(cardLongviewChart, {
@@ -17,7 +17,7 @@ fetch('/total_views')
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: false
                 }
             }
         }

@@ -5,9 +5,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    path("datatables", views.datatables, name='datatables'),
+    path('index', views.index, name='index'),
+    path('', views.index, name='index'),
+    path('visuals', views.visuals, name="visuals"),
     path("reports", views.reports, name='reports'),
-    path("index_dash", views.index_dash, name='dash-index'),
-    path("datatables", views.datatables, name='dash-datatables'),
-    path('', views.index, name='dahs-index'),
-    path('visuals', views.visuals, name="visuals")
+    path("test", views.test, name="test"),
 ]

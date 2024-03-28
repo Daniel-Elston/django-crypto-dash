@@ -64,7 +64,7 @@ new Chart(card3viewChart, {
     }
 });
 
-fetch('/total_views')
+fetch('/visuals_api')
 .then(res => res.json())
 .then (data => {
     new Chart(cardLongviewChart, {
@@ -111,9 +111,9 @@ const dataTable = new simpleDatatables.DataTable(datatable1, {
     searchable: true,
     fixedHeight: true,
     data: {
-        headings: ['Name', 'Position', 'Office'],
+        headings: ['Name', 'Position', 'XOffice'],
     data: [
-        ['test', 'Tiger Nixon', 'System Architect'],
+        ['test', 'Tiger Test Nixon', 'System Architect'],
         ['test', 'Tiger Nixon', 'System test'],
         ]
     }

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import asyncio
-import pprint
 
 import ccxt.pro as ccxtpro
 from django.core.management.base import BaseCommand
@@ -13,7 +12,7 @@ from utils.file_handler import temp_file_reset
 class ExtractCommand(BaseCommand):
     help = 'Transforms raw data into a format suitable for storage in the database.'
 
-    async def ticker(self, symbol='BTC/USDT', exchange_name='binance', batch_size=1, max_items=2):
+    async def ticker(self, symbol='BTC/USDT', exchange_name='binance', batch_size=60, max_items=60*5):
         """Watch the ticker for a specific symbol."""
         exchange = getattr(ccxtpro, exchange_name)()
         filepath = 'data/temp/fetch_ticker.json'
@@ -24,8 +23,9 @@ class ExtractCommand(BaseCommand):
         try:
             while len(batch) < max_items:
                 ticker = await exchange.fetch_ticker(symbol)
-                pprint.pprint(ticker)
-                print('=' * 80)
+                # pprint.pprint(ticker)
+                print('Saving batch')
+                # print('=' * 80)
                 batch.append(ticker)
 
                 if len(batch) % batch_size == 0:

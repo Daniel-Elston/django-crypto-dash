@@ -1,5 +1,7 @@
 # Live Crypto Analysis Dashboard with Django
 
+Please see: ```data_management/management/commands``` for ETL process
+
 This project is a comprehensive crypto analysis dashboard that offers real-time insights into cryptocurrency markets. Utilizing Django for the web framework, ccxt for fetching live market data, and PostgreSQL for data storage, the dashboard presents a dynamic view of cryptocurrency metrics, including price movements and volume trends.
 
 #### -- Project Status: [ongoing]

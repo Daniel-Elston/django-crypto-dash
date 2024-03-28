@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="m-3">
+    <h1 class="ml-3">Crypto Prices</h1>
+    <table id="cryptoTable" class="table">
+        <thead>
+            <tr>
+                {% for col in columns %}
+                <th>{{ col.title }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Data will be populated by JavaScript -->
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var data = {{ data|safe }};
+    var table = document.querySelector("#cryptoTable tbody");
+    data.forEach(item => {
+        var row = table.insertRow();
+        Object.values(item).forEach(text => {
+            var cell = row.insertCell();
+            cell.textContent = text;
+        });
+    });
+
+    // Initialize SimpleDataTable
+    new simpleDatatables.DataTable("#cryptoTable");
+});
+</script>
+{% endblock scripts %}

@@ -15,11 +15,13 @@ def get_conversion_maps():
 def timestamp_to_datetime(value):
     """Converts a Unix timestamp (in milliseconds) to a datetime object."""
     return datetime.fromtimestamp(value / 1000.0, tz=timezone.utc)
+    # return dt.strftime("%Y-%m-%d %H:%M:%S")
 
 
 def iso_to_datetime(value):
     """Converts an ISO 8601 datetime string to a datetime object."""
     return datetime.fromisoformat(value.rstrip('Z')).replace(tzinfo=timezone.utc)
+    # return dt.strftime("%Y-%m-%d %H:%M:%S")
 
 
 def fetch_ticker_conversion_map():

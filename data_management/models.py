@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from django.db import models
+from django_pandas.managers import DataFrameManager
 
 
 class CryptoFetchTicker(models.Model):
@@ -45,6 +46,9 @@ class CryptoFetchTicker(models.Model):
     # firstId = models.IntegerField()
     # lastId = models.IntegerField()
     # count = models.IntegerField()
+
+    objects = models.Manager()  # Django Manager
+    pdobjects = DataFrameManager()  # Pandas Manager
 
     def __str__(self):
         return self.symbol

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+        <div class="my-3 mx-3">
+        <h1>My App</h1>
+        <div class="d-flex">
+
+            <div class="col-3 card mx-3">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">Total Views</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Yearly</h6>
+                    <div>
+                        <canvas id="card-1"></canvas>
+                    </div>
+                    <h1 class="card-text text-end">5,000,000</h1>
+                </div>
+            </div>
+
+            <div class="col-3 card mx-3">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">Growth</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Yearly</h6>
+                    <div>
+                        <canvas id="card-2"></canvas>
+                    </div>
+                    <h1 class="card-text text-end">5,000,000</h1>
+                </div>
+            </div>
+
+                <div class="col-3 card mx-3">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Total Views</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Yearly</h6>
+                        <p class="card-text">1,200</p>
+                        <div class="d-flex justify-content-between">
+                            <a href="#" class="card-link">More info</a>
+                            <a href="#" class="card-link">Edit</a>
+                        </div>
+                        <div>
+                            <canvas id="card-3"></canvas>
+                        </div>
+                        <h1 class="card-text text-end text-success">5,000</h1>
+                    </div>
+                </div>
+            </div>
+
+                <!-- Create full width card -->
+
+                <div class="mx-3 my-5">
+                    <h3 class="text-centre">Total Views</h3>
+                    <div class="bg-secondary bg-opacity-25 px-5 py-3 rounded">
+                        <canvas id="card-long"></canvas>
+                    </div>
+                </div>
+
+                <!-- Next to DT -->
+                <div class="d-flex">
+                    <div>
+                <div class=" card mx-3 p-3">
+                    <h3 class="text-centre">Total Views</h3>
+                        <canvas id="dt-sub"></canvas>
+                    </div>
+                </div>
+
+                <!-- DataTables -->
+                <div>
+                    <div class="col-lg-25">
+                    <h1 class="text-center">DataTables</h1>
+                    <table id="datatable1"></table>
+                </div>
+
+                <div>
+                    <div class="col-lg-25">
+                    <h1 class="text-center">DataTables</h1>
+                    <table id="pivot-table"></table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block scripts %}
+<script src="{% static 'js/index.js' %}"></script>
+{% endblock scripts %}
